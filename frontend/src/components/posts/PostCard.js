@@ -1,4 +1,5 @@
 import React from "react";
+import CommentsPage from "../comments/CommentsPage";
 
 function PostCard({post, onDeleteClick}) {
     return (
@@ -7,8 +8,10 @@ function PostCard({post, onDeleteClick}) {
                 <p>
                     {post.body}
                 </p>
-
-                <button className="btn btn-danger" onClick={onDeleteClick}>Delete</button>
+                <button type="button" className="btn btn-outline-success">Like</button>
+                <button type="button" className="btn btn-outline-danger">Dislike</button>
+                <button type="button" className="btn btn-link">Comments</button>
+                <button className="btn btn-outline-danger" onClick={onDeleteClick}>Delete</button>
             </div>
         </div>
     );

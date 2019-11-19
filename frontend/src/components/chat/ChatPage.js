@@ -5,7 +5,7 @@ class ChatPage extends Component {
     render() {
         return (
             <div>
-                <CommentsPage />
+                
             </div>
         );
     }

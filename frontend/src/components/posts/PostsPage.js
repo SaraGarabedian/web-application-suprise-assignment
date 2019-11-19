@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import React from "react";
 import PostsApi from "./../../api/PostsApi";
 import PostForm from "./PostForm";
@@ -39,7 +41,9 @@ class PostsPage extends React.Component {
     }
 
     componentDidMount() {
-        PostsApi.getAllPosts()
+        //PostsApi.getAllPosts()
+        axios
+        .get("https://jsonplaceholder.typicode.com/posts?_start=10&_limit=10")
             .then(({data}) => this.setState({posts: data}))
             .catch(err => console.error(err));
     }
