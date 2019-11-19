@@ -19,6 +19,7 @@ function PostForm({onSubmit}) {
                     <div className="form-group">
                         <textarea 
                             className="form-control"
+                            placeholder="Write something..."
                             value={body}
                             onChange={e => setBody(e.target.value)} />
                     </div>

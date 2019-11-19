@@ -38,7 +38,6 @@ class PostsPage extends React.Component {
         }
     }
 
-
     componentDidMount() {
         PostsApi.getAllPosts()
             .then(({data}) => this.setState({posts: data}))
