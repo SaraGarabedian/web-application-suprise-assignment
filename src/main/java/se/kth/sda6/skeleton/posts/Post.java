@@ -1,9 +1,23 @@
 package se.kth.sda6.skeleton.posts;
 
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
 // @TODO add Hibernate annotations to define which table and columns should be used to save the Post Object.
+@Entity
+@Table(name = "post")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
+    @NotEmpty(message = "Please write something")
+    @Length(min = 2, max=100, message = "Post length most be between 2-100 characters")
+    @Column(name = "post_body")
     private String body;
 
 //    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
