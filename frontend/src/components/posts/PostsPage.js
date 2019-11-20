@@ -9,7 +9,6 @@ class PostsPage extends React.Component {
 
         this.state = {
             posts: [],
-            comments: []
         }
     }
 
@@ -57,7 +56,6 @@ class PostsPage extends React.Component {
                         key={post.id}
                         post={post}
                         onDeleteClick={() => this.deletePost(post)}
-                        //postComment={(message) => this.postComment(post.id, message)}
                     />
                 )}
             </React.Fragment>

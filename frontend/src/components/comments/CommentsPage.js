@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import React, { Component } from "react";
 import CommentsApi from "./../../api/CommentsApi";
 import CommentForm from "./CommentForm";
@@ -41,10 +39,7 @@ class CommentsPage extends Component {
     }
 
     componentDidMount() {
-        //CommentsApi.getAllComments(this.props.postId)
-        //for testing purposes
-        axios
-            .get("https://jsonplaceholder.typicode.com/comments?_start=10&_limit=10")
+        CommentsApi.getAllComments(this.props.postId)
             .then(({ data }) => this.setState({ comments: data }))
             .catch(err => console.error(err));
     }
