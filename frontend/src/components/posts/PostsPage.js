@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import PostsApi from "./../../api/PostsApi";
 import PostForm from "./PostForm";
 import PostCard from "./PostCard";
 
-class PostsPage extends React.Component {
+class PostsPage extends Component {
     constructor(props) {
         super(props)
 

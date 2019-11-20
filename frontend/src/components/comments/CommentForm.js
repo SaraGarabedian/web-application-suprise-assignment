@@ -14,7 +14,7 @@ function CommentForm({onSubmit}) {
     return (
         <div className="card">
             <div className="card-body">
-                <h6 className="card-title" >Write a comment...</h6>
+                <h6 className="card-title" >Write a comment</h6>
                 <div>
                     <div className="form-group">
                         <textarea 
