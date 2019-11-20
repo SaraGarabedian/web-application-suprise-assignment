@@ -10,6 +10,9 @@ function PostCard({ post, onDeleteClick }) {
                 <p>
                     {post.body}
                 </p>
+                <p className="font-italic text-right">
+                    {post.username}
+                </p>
                 <button className="btn btn-outline-danger" onClick={onDeleteClick}>Delete</button>
                 <button type="button"
                     className="btn btn-link"

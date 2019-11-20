@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import se.kth.sda6.skeleton.auth.IAuthenticationFacade;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts")
 public class PostController {
+
+    @Autowired
+    private IAuthenticationFacade authenticationFacade;
 
     @Autowired
     private PostService postService;
@@ -31,6 +35,7 @@ public class PostController {
 
     @PostMapping("")
     public Post create(@RequestBody Post newPost) {
+        newPost.setUsername(authenticationFacade.getAuthentication().getName());
         return postService.save(newPost);
     }
 
