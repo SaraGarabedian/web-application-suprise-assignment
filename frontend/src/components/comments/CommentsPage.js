@@ -8,12 +8,12 @@ import CommentList from "./CommentList";
 class CommentsPage extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          comments: [],
+            comments: [],
         };
     }
-    
+
     async createComment(commentData) {
         try {
             const response = await CommentsApi.createComment(commentData);
@@ -41,25 +41,25 @@ class CommentsPage extends Component {
     }
 
     componentDidMount() {
-        //CommentsApi.getAllComments()
+        //CommentsApi.getAllComments(this.props.postId)
         //for testing purposes
         axios
-        .get("https://jsonplaceholder.typicode.com/comments?_start=10&_limit=10")
-            .then(({data}) => this.setState({comments: data}))
+            .get("https://jsonplaceholder.typicode.com/comments?_start=10&_limit=10")
+            .then(({ data }) => this.setState({ comments: data }))
             .catch(err => console.error(err));
     }
 
     render() {
         return (
             <div>
-            <CommentForm onSubmit={(commentData) => this.createComment(commentData)}/>
+                <CommentForm onSubmit={(commentData) => this.createComment(commentData)} />
 
-            <CommentList
-                comments={this.state.comments}
-            />
+                <CommentList
+                    comments={this.state.comments}
+                />
             </div>
         );
-      }
     }
+}
 
 export default CommentsPage;

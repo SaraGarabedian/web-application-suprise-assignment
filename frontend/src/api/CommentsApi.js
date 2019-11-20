@@ -5,8 +5,8 @@ class CommentsApi {
         return Api.get('/comments');
     }
 
-    getCommentById(id) {
-        return Api.get('/comments/'+id);
+    getCommentsById(id) {
+        return Api.get('/comments/'+id); //need to change the path
     }
 
     createComment(comment) {

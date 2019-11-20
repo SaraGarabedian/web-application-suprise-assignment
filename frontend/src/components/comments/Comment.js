@@ -1,9 +1,7 @@
-import React from "react";
+import React from "react"
 
-function Comment(props) {
-  const { name, message, time } = props.comment;
-
-  return (
+const Comment = ({ name, message, time }) =>
+  (
     <div className="media mb-3">
       <div className="media-body p-2 shadow-sm rounded bg-light border">
         <small className="float-right text-muted">{time}</small>
@@ -11,7 +9,6 @@ function Comment(props) {
         {message}
       </div>
     </div>
-  );
-}
+  )
 
-export default Comment;
+export default Comment

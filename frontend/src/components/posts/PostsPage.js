@@ -7,11 +7,13 @@ import PostCard from "./PostCard";
 
 class PostsPage extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
-            posts : []
-        };
+            isShowingComments: false,
+            posts: [],
+            comments: []
+        }
     }
 
     async createPost(postData) {
@@ -39,27 +41,32 @@ class PostsPage extends React.Component {
             console.error(e);
         }
     }
-
+    
     componentDidMount() {
         //PostsApi.getAllPosts()
         axios
-        .get("https://jsonplaceholder.typicode.com/posts?_start=10&_limit=10")
-            .then(({data}) => this.setState({posts: data}))
+            .get("https://jsonplaceholder.typicode.com/posts?_start=10&_limit=10")
+            .then(({ data }) => this.setState({ posts: data }))
             .catch(err => console.error(err));
     }
 
     render() {
-        const posts = this.state.posts;
+        const { isShowingComments, posts } = this.state;
 
         return (
-            <div>
-                <PostForm onSubmit={(postData) => this.createPost(postData)}/>
+            <React.Fragment>
+                <PostForm onSubmit={(postData) => this.createPost(postData)} />
 
-                {posts.map(post => 
-                    <PostCard key={post.id} post={post} onDeleteClick={() => this.deletePost(post)}/>
+                {posts.map(post =>
+                    <PostCard
+                        key={post.id}
+                        post={post}
+                        onDeleteClick={() => this.deletePost(post)}
+                        //postComment={(message) => this.postComment(post.id, message)}
+                    />
                 )}
-            </div>
-        );
+            </React.Fragment>
+        )
     }
 }
 

@@ -7,7 +7,6 @@
 //import se.kth.sda6.skeleton.posts.Post;
 //import se.kth.sda6.skeleton.posts.PostService;
 //
-//import javax.persistence.EntityNotFoundException;
 //import java.util.List;
 //
 //@RestController
@@ -22,24 +21,42 @@
 //    }
 //
 //    @GetMapping("/comments")
-//    public ResponseEntity<?> getAllCommentsOnPost(@RequestParam Long postId) {
+//    public ResponseEntity<?> getAll() {
+//        List<Comment> comments = commentService.getAll();
+//        return new ResponseEntity<>(comments, HttpStatus.OK);
+//    }
+//
+//    @GetMapping(value = "/comments", params = "postId")
+//    public ResponseEntity<?> getAllOnPost(@RequestParam Long postId) {
 //        Post post = postService.getByID(postId)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find post with id " + postId.toString()));
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 //        List<Comment> comments = commentService.getAllByPost(post);
 //        return new ResponseEntity<>(comments, HttpStatus.OK);
 //    }
 //
-//    @DeleteMapping("/comments/{id}")
-//    public ResponseEntity<?> deleteComment(@PathVariable("id") Long id) {
-//        commentService.deleteById(id);
+//    @GetMapping("/comments/{id}")
+//    public ResponseEntity<?> getById(@PathVariable Long id) {
+//        Comment comment = commentService.getByID(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//        return new ResponseEntity<>(comment, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("comments")
+//    public ResponseEntity<?> create(@RequestBody Comment comment) {
+//        Comment newComment = commentService.create(comment);
+//        return new ResponseEntity<Comment>(newComment, HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping("comments")
+//    public ResponseEntity<?> update(@RequestBody Comment comment) {
+//        commentService.update(comment);
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
 //
-//    @PostMapping("posts/{id}/comments")
-//    public ResponseEntity<?> postComment(@RequestBody Comment comment, @PathVariable("id") Long postId) {
-//        Post post = postService.getByID(postId)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find post with id " + postId.toString()));
-//        Comment savedComment = commentService.save(comment, post);
-//        return new ResponseEntity<Comment>(savedComment, HttpStatus.CREATED);
+//    @DeleteMapping("/comments/{id}")
+//    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+//        commentService.delete(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
+//
 //}
