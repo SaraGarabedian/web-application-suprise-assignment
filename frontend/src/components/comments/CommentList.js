@@ -24,10 +24,10 @@ const CommentList = ({ comments }) =>
         Comment{comments.length > 0 ? "s" : ""}
       </h5>
 
-      {comments.map(( {id, body, postId}) => (
-        <Comment key={id} body={body} postId={postId}/>
+      {comments.map(( {id, body, username}) => (
+        <Comment key={id} body={body} username={username}/>
       ))}
     </div>
-  )
+  );
 
 export default CommentList;

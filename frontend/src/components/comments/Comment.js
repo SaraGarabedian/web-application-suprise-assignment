@@ -11,13 +11,16 @@ const Comment = ({ name, message, time }) =>
     </div>
   ) */
 
-  const Comment = ({ id, body, postId }) =>
+  const Comment = ({ body, username }) =>
   (
     <div className="media mb-3">
       <div className="media-body p-2 shadow-sm rounded bg-light border">
         {body}
+          <p className="font-italic text-right">
+              {username}
+          </p>
       </div>
     </div>
-  )
+  );
 
 export default Comment
