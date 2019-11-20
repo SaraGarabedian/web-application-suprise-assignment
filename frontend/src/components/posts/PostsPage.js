@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import React from "react";
 import PostsApi from "./../../api/PostsApi";
 import PostForm from "./PostForm";
@@ -10,7 +8,6 @@ class PostsPage extends React.Component {
         super(props)
 
         this.state = {
-            isShowingComments: false,
             posts: [],
             comments: []
         }
@@ -43,15 +40,13 @@ class PostsPage extends React.Component {
     }
     
     componentDidMount() {
-        //PostsApi.getAllPosts()
-        axios
-            .get("https://jsonplaceholder.typicode.com/posts?_start=10&_limit=10")
+        PostsApi.getAllPosts()
             .then(({ data }) => this.setState({ posts: data }))
             .catch(err => console.error(err));
     }
 
     render() {
-        const { isShowingComments, posts } = this.state;
+        const { posts } = this.state;
 
         return (
             <React.Fragment>

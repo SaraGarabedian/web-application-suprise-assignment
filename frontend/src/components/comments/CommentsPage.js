@@ -51,13 +51,13 @@ class CommentsPage extends Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <CommentForm onSubmit={(commentData) => this.createComment(commentData)} />
 
                 <CommentList
                     comments={this.state.comments}
                 />
-            </div>
+            </React.Fragment>
         );
     }
 }
