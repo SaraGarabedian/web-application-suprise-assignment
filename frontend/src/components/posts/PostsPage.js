@@ -5,11 +5,11 @@ import PostCard from "./PostCard";
 
 class PostsPage extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
-            posts : []
-        };
+            posts: [],
+        }
     }
 
     async createPost(postData) {
@@ -37,26 +37,29 @@ class PostsPage extends React.Component {
             console.error(e);
         }
     }
-
-
+    
     componentDidMount() {
         PostsApi.getAllPosts()
-            .then(({data}) => this.setState({posts: data}))
+            .then(({ data }) => this.setState({ posts: data }))
             .catch(err => console.error(err));
     }
 
     render() {
-        const posts = this.state.posts;
+        const { posts } = this.state;
 
         return (
-            <div>
-                <PostForm onSubmit={(postData) => this.createPost(postData)}/>
+            <React.Fragment>
+                <PostForm onSubmit={(postData) => this.createPost(postData)} />
 
-                {posts.map(post => 
-                    <PostCard key={post.id} post={post} onDeleteClick={() => this.deletePost(post)}/>
+                {posts.map(post =>
+                    <PostCard
+                        key={post.id}
+                        post={post}
+                        onDeleteClick={() => this.deletePost(post)}
+                    />
                 )}
-            </div>
-        );
+            </React.Fragment>
+        )
     }
 }
 

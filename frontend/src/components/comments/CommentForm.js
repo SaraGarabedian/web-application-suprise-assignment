@@ -1,6 +1,6 @@
 import React from "react";
 
-function PostForm({onSubmit}) {
+function CommentForm({onSubmit}) {
     const [body, setBody] = React.useState("");
 
     const handleSubmit = () => {
@@ -14,7 +14,7 @@ function PostForm({onSubmit}) {
     return (
         <div className="card">
             <div className="card-body">
-                <h4 className="card-title" >What's on your mind?</h4>
+                <h6 className="card-title" >Write a comment...</h6>
                 <div>
                     <div className="form-group">
                         <textarea 
@@ -29,7 +29,7 @@ function PostForm({onSubmit}) {
                         <button 
                             className="btn btn-primary" 
                             onClick={handleSubmit}>
-                            Post
+                            Comment
                         </button>
                     </div>
                 </div>
@@ -38,4 +38,4 @@ function PostForm({onSubmit}) {
     );
 }
 
-export default PostForm;
+export default CommentForm;
