@@ -26,10 +26,10 @@ class PostsPage extends Component {
         }
     }
 
-    async deletePost(post) {
+    async deletePost(id) {
         try {
-            await PostsApi.deletePost(post.id);
-            const newPosts = this.state.posts.filter(p => p.id !== post.id);
+            await PostsApi.deletePost(id);
+            const newPosts = this.state.posts.filter(p => p.id !== id);
             this.setState({
                 posts: newPosts,
             });
@@ -55,7 +55,7 @@ class PostsPage extends Component {
                     <PostCard
                         key={post.id}
                         post={post}
-                        onDeleteClick={() => this.deletePost(post)}
+                        onDeleteClick={() => this.deletePost(post.id)}
                     />
                 )}
             </React.Fragment>

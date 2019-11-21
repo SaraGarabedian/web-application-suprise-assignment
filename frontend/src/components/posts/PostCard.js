@@ -26,10 +26,10 @@ class PostCard extends Component {
         }
     }
 
-    async deleteComment(comment) {
+    async deleteComment({id}) {
         try {
-            await CommentsApi.deleteComment(comment.id);
-            const newComments = this.state.comments.filter(c => c.id !== comment.id);
+            await CommentsApi.deleteComment(id);
+            const newComments = this.state.comments.filter(c => c.id !== id);
             this.setState({
                 comments: newComments,
             });
@@ -52,6 +52,7 @@ class PostCard extends Component {
         return (
             <div className="card mt-3">
                 <div className="card-body">
+                <h6 className="mt-0 mb-1 text-muted">{this.props.post.username}</h6>
                     <p>
                         {this.props.post.body}
                     </p>
@@ -80,10 +81,11 @@ class PostCard extends Component {
                     </div >
                     <div id={'show-comment' + this.props.post.id} className="collapse">
                         {commentsByPost
-                            .map(( {id, body}) => (
+                            .map(( {id, body, username}) => (
                                 <Comment key={id}
                                 body={body}
-                                onDeleteClick={() => this.deleteComment({id, body})}
+                                username={username}
+                                onDeleteClick={() => this.deleteComment({id})}
                                     />
                         ))
                         }
