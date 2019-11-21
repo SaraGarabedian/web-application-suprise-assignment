@@ -6,11 +6,11 @@ class CommentsApi {
     }
 
     getCommentsById(id) {
-        return Api.get('/comments?postId='+id);
+        return Api.get('/comments/'+id);
     }
 
-    createComment(postId, comment) {
-        return Api.post('/posts/' + postId + '/comments', comment);
+    createComment(comment) {
+        return Api.post('/comments', comment);
     }
 
     updateComment(comment) {

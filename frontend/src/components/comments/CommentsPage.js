@@ -12,9 +12,9 @@ class CommentsPage extends Component {
         };
     }
 
-    async createComment(postId, commentData) {
+    async createComment(commentData) {
         try {
-            const response = await CommentsApi.createComment(postId, commentData);
+            const response = await CommentsApi.createComment(commentData);
             const comment = response.data;
             const newComments = this.state.comments.concat(comment);
 
@@ -39,7 +39,7 @@ class CommentsPage extends Component {
     }
 
     componentDidMount() {
-        CommentsApi.getCommentsById(this.props.postId)
+        CommentsApi.getAllComments(this.props.postId)
             .then(({ data }) => this.setState({ comments: data }))
             .catch(err => console.error(err));
     }
@@ -47,7 +47,7 @@ class CommentsPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <CommentForm onSubmit={(commentData) => this.createComment(this.props.postId, commentData)} />
+                <CommentForm onSubmit={(commentData) => this.createComment(commentData)} />
 
                 <CommentList
                     comments={this.state.comments}
