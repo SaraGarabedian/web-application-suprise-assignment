@@ -14,6 +14,12 @@ class PostsPage extends Component {
         }
     }
 
+    updateParentState(newComments){
+        this.setState({
+            comments: newComments,
+        });
+    }
+
     async createPost(postData) {
         try {
             const response = await PostsApi.createPost(postData);
@@ -68,7 +74,8 @@ class PostsPage extends Component {
                                 .filter(comment => comment.post !== null)
                                 .filter(({post:{id}}) => (id !== null && id === post.id))
                         }
-                        onDeleteClick={() => this.deletePost(post.id)}
+                        onDeletePostClick={() => this.deletePost(post.id)}
+                        updateParentState={this.updateParentState.bind(this)}
                     />
                 )}
             </React.Fragment>
