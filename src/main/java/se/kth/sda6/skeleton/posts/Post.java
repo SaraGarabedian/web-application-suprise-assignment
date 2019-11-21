@@ -23,8 +23,8 @@ public class Post {
     @Column(name = "post_body")
     private String body;
 
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-//    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     @Column(name = "author")
     private String username;
@@ -60,13 +60,13 @@ public class Post {
         this.username = username;
     }
 
-//    public void addComment(Comment comment) {
-//        comments.add( comment );
-//        comment.setPost( this );
-//    }
-//
-//    public void removeComment(Comment comment) {
-//        comments.remove( comment );
-//        comment.setPost( null );
-//    }
+    public void addComment(Comment comment) {
+        comments.add( comment );
+        comment.setPost( this );
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove( comment );
+        comment.setPost( null );
+    }
 }

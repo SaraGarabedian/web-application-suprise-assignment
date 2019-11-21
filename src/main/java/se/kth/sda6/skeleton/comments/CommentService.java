@@ -12,34 +12,25 @@ import java.util.stream.Collectors;
 @Service
 public class CommentService {
 
+    @Autowired
     private CommentRepository commentRepository;
 
-    @Autowired
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
-
-    public List<Comment> getAll() {
-        return commentRepository.findAll();
-    }
-
     public List<Comment> getAllByPost(Post post) {
-        return commentRepository.findAllByPost(post);
+        List<Comment> list = new ArrayList<>();
+        commentRepository.findAllByPost(post).forEach(list::add);
+        return list;
     }
 
     public Optional<Comment> getByID(Long id) {
         return commentRepository.findById(id);
     }
 
-    public Comment create(Comment comment) {
+    public Comment save(Comment comment, Post post) {
+        post.addComment(comment);
         return commentRepository.save(comment);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         commentRepository.deleteById(id);
-    }
-
-    public void update(Comment comment) {
-        commentRepository.save(comment);
     }
 }

@@ -1,7 +1,9 @@
 package se.kth.sda6.skeleton.comments;
 
 
+import se.kth.sda6.skeleton.auth.AuthService;
 import se.kth.sda6.skeleton.posts.Post;
+import se.kth.sda6.skeleton.user.User;
 
 import javax.persistence.*;
 
@@ -21,6 +23,9 @@ public class Comment {
 
     @ManyToOne()
     private Post post;
+
+    @Column(name = "author")
+    private String username;
 
     public Comment() {
     }
@@ -51,5 +56,13 @@ public class Comment {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
