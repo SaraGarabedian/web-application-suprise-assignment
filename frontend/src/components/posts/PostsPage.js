@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PostsApi from "./../../api/PostsApi";
+import CommentsApi from "./../../api/CommentsApi";
 import PostForm from "./PostForm";
 import PostCard from "./PostCard";
 
@@ -9,6 +10,7 @@ class PostsPage extends Component {
 
         this.state = {
             posts: [],
+            comments: [],
         }
     }
 
@@ -39,13 +41,19 @@ class PostsPage extends Component {
     }
     
     componentDidMount() {
+        //get all posts
         PostsApi.getAllPosts()
             .then(({ data }) => this.setState({ posts: data }))
             .catch(err => console.error(err));
+        
+        //get all comments
+        CommentsApi.getAllComments()
+        .then(({ data }) => this.setState({ comments: data }))
+        .catch(err => console.error(err));
     }
 
     render() {
-        const { posts } = this.state;
+        const { posts, comments } = this.state;
 
         return (
             <React.Fragment>
@@ -55,6 +63,11 @@ class PostsPage extends Component {
                     <PostCard
                         key={post.id}
                         post={post}
+                        comments={
+                            comments
+                                .filter(comment => comment.post !== null)
+                                .filter(({post:{id}}) => (id !== null && id === post.id))
+                        }
                         onDeleteClick={() => this.deletePost(post.id)}
                     />
                 )}

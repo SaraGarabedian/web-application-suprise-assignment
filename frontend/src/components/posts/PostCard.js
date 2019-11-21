@@ -8,7 +8,7 @@ class PostCard extends Component {
         super(props);
 
         this.state = {
-            comments: [],
+            comments: this.props.comments,
         }
     }
 
@@ -38,16 +38,8 @@ class PostCard extends Component {
         }
     }
 
-    componentDidMount() {
-        CommentsApi.getAllComments()
-            .then(({ data }) => this.setState({ comments: data }))
-            .catch(err => console.error(err));
-    }
-
     render(){
-        const commentsByPost = this.state.comments
-                                .filter(comment => comment.post !== null)
-                                .filter(({post:{id}}) => (id !== null && id === this.props.post.id));
+        const { comments } = this.state;
 
         return (
             <div className="card mt-3">
@@ -61,15 +53,15 @@ class PostCard extends Component {
                         className="btn btn-link"
                         data-toggle="collapse"
                         data-target={'#show-comment' + this.props.post.id}>
-                            <span className="badge badge-info">{commentsByPost.length}</span>{" "}
-                            Comment{commentsByPost.length > 0 ? "s" : ""}
+                            <span className="badge badge-info">{comments.length}</span>{" "}
+                            Comment{comments.length > 0 ? "s" : ""}
                     </button>
                     </p>
                     <button className="btn btn-outline-danger" onClick={this.props.onDeleteClick}>Delete</button>
                     <button type="button"
                         className="btn btn-link"
                         data-toggle="collapse"
-                        data-target={'#write-comment' + this.props.post.id}> Comment
+                        data-target={'#write-comment' + this.props.post.id}> Write a comment
                     </button>
                     <div id={'write-comment' + this.props.post.id} className="collapse">
                         <CommentForm onSubmit={({body}) => this.createComment(
@@ -80,7 +72,7 @@ class PostCard extends Component {
                         )} />
                     </div >
                     <div id={'show-comment' + this.props.post.id} className="collapse">
-                        {commentsByPost
+                        {comments
                             .map(( {id, body, username}) => (
                                 <Comment key={id}
                                 body={body}
