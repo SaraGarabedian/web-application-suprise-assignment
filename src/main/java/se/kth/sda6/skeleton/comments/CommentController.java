@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda6.skeleton.auth.IAuthenticationFacade;
 import se.kth.sda6.skeleton.posts.Post;
 import se.kth.sda6.skeleton.posts.PostService;
+import se.kth.sda6.skeleton.user.UserService;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class CommentController {
 
     @Autowired
     private IAuthenticationFacade authenticationFacade;
+    @Autowired
+    private UserService userService;
 
     public CommentController(CommentService commentService, PostService postService) {
         this.commentService = commentService;
@@ -35,15 +38,20 @@ public class CommentController {
 
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable("id") Long id) {
-        commentService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        String currentUserEmail = authenticationFacade.getAuthentication().getName();
+        String userName = userService.getUserByEmail(currentUserEmail).get().getName();
+        if(!commentService.deleteById(id, userName)) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+        return ResponseEntity.ok(null);
     }
 
     @PostMapping("posts/{id}/comments")
     public ResponseEntity<?> postComment(@RequestBody Comment comment, @PathVariable("id") Long postId) {
         Post post = postService.getByID(postId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find post with id " + postId.toString()));
-        comment.setUsername(authenticationFacade.getAuthentication().getName());
+        String currentUserEmail = authenticationFacade.getAuthentication().getName();
+        comment.setUsername(userService.getUserByEmail(currentUserEmail).get().getName());
         Comment savedComment = commentService.save(comment, post);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }

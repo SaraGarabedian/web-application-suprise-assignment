@@ -7,7 +7,6 @@ import se.kth.sda6.skeleton.posts.Post;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -30,7 +29,12 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public void deleteById(Long id) {
-        commentRepository.deleteById(id);
+    public boolean deleteById(Long id, String currentUser) {
+        Comment currentComment = getByID(id).get();
+        if(currentComment.getUsername().equals(currentUser)) {
+            commentRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
