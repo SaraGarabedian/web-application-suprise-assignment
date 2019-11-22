@@ -1,15 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 import PostsApi from "./../../api/PostsApi";
+import CommentsApi from "./../../api/CommentsApi";
 import PostForm from "./PostForm";
 import PostCard from "./PostCard";
 
-class PostsPage extends React.Component {
+class PostsPage extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             posts: [],
+            comments: [],
         }
+    }
+
+    updateParentState(newComments){
+        this.setState({
+            comments: newComments,
+        });
     }
 
     async createPost(postData) {
@@ -26,10 +34,10 @@ class PostsPage extends React.Component {
         }
     }
 
-    async deletePost(post) {
+    async deletePost(id) {
         try {
-            await PostsApi.deletePost(post.id);
-            const newPosts = this.state.posts.filter(p => p.id !== post.id);
+            await PostsApi.deletePost(id);
+            const newPosts = this.state.posts.filter(p => p.id !== id);
             this.setState({
                 posts: newPosts,
             });
@@ -39,13 +47,19 @@ class PostsPage extends React.Component {
     }
     
     componentDidMount() {
+        //get all posts
         PostsApi.getAllPosts()
             .then(({ data }) => this.setState({ posts: data }))
             .catch(err => console.error(err));
+        
+        //get all comments
+        CommentsApi.getAllComments()
+        .then(({ data }) => this.setState({ comments: data }))
+        .catch(err => console.error(err));
     }
 
     render() {
-        const { posts } = this.state;
+        const { posts, comments } = this.state;
 
         return (
             <React.Fragment>
@@ -55,7 +69,13 @@ class PostsPage extends React.Component {
                     <PostCard
                         key={post.id}
                         post={post}
-                        onDeleteClick={() => this.deletePost(post)}
+                        comments={
+                            comments
+                                .filter(comment => comment.post !== null)
+                                .filter(({post:{id}}) => (id !== null && id === post.id))
+                        }
+                        onDeletePostClick={() => this.deletePost(post.id)}
+                        updateParentState={this.updateParentState.bind(this)}
                     />
                 )}
             </React.Fragment>
