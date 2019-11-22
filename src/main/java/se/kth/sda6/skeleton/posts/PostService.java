@@ -31,7 +31,12 @@ public class PostService {
         return Optional.of(repository.save(post));
     }
 
-    public void deleteById(Long id) {
-        repository.deleteById(id);
+    public boolean deleteById(Long id, String currentUser) {
+        Post currentPost = getByID(id).get();
+        if(currentPost.getUsername().equals(currentUser)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
